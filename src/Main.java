@@ -1,3 +1,4 @@
+import util.Input;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -6,7 +7,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         List<Contact> contacts = new ArrayList<>();
-
+        Input input = new Input();
+        String userChoice;
 
         try {
 //            writeTestFile();
@@ -22,10 +24,37 @@ public class Main {
         }
 
         contacts = readAllContacts();
-        for (Contact contact : contacts) {
-            System.out.println(contact.getName());
-            System.out.println(contact.getPhoneNumber());
-        }
+//        for (Contact contact : contacts) {
+//            System.out.println(contact.getName());
+//            System.out.println(contact.getPhoneNumber());
+//        }
+
+
+
+        do {
+            showMenu();
+            System.out.println("Enter your choice: ");
+            userChoice = input.getString();
+
+            if(userChoice.equals("1")) {
+                showAll(contacts);
+            }
+
+//            else if(userChoice.equals("2")) {
+//                showMoviesByCategory("animated");
+//            } else if(userChoice.equals("3")) {
+//                showMoviesByCategory("drama");
+//            } else if(userChoice.equals("4")) {
+//                showMoviesByCategory("horror");
+//            } else if (userChoice.equals("5")) {
+//                showMoviesByCategory("scifi");
+//            }
+
+            System.out.println();
+
+        } while(!userChoice.equals("5"));
+        System.out.println("Bye");
+
 
     }
 
@@ -82,6 +111,22 @@ public class Main {
             System.out.println(e.getMessage());
         }
         return listOfContacts;
+    }
+
+    public static void showMenu(){
+        System.out.println("1. View contacts.");
+        System.out.println("2. Add a new contact.");
+        System.out.println("3. Search a contact by name;");
+        System.out.println("4. Delete an existing contact.");
+        System.out.println("5. Exit.");
+        System.out.println("(1, 2,3 4, or 5):");
+    }
+
+    public static void showAll(List<Contact> contacts){
+        for (Contact contact : contacts) {
+            System.out.println(contact.getName());
+            System.out.println(contact.getPhoneNumber());
+        }
     }
 
 
