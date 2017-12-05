@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
+        List<Contact> contacts = new ArrayList<>();
+
 
         try {
 //            writeTestFile();
@@ -13,13 +15,18 @@ public class Main {
             e.printStackTrace();
             System.out.println(e.getMessage());
             System.out.println("IO Exception, fix your stuff!");
-        } catch(Exception e) {  //if there was any other Exception being thrown it would catch it here
+        } catch (Exception e) {  //if there was any other Exception being thrown it would catch it here
             System.out.println(e.getStackTrace());
             System.out.println(e.getMessage());
             System.out.println("Something went wrong.!");
         }
 
-        readAllContacts();
+        contacts = readAllContacts();
+        for (Contact contact : contacts) {
+            System.out.println(contact.getName());
+            System.out.println(contact.getPhoneNumber());
+        }
+
     }
 
     public static void writeContactsToFile() throws IOException {
@@ -32,55 +39,51 @@ public class Main {
             Files.createDirectories(dataDirectory);
         }
 
-        if (! Files.exists(dataFile)) {
+        if (!Files.exists(dataFile)) {
             Files.createFile(dataFile);
         }
 
         ArrayList<String> contacts = new ArrayList<>();
-        contacts.add("Juan Candia 915-471-5340");
-        contacts.add("Tito Valiente 254-368-9782");
-        contacts.add("Terrell Stewart 201-913-5865");
+        contacts.add("Another name,915-471-5340");
+        contacts.add("Some Else,254-368-9782");
+        contacts.add("Mickey Mouse,201-913-5865");
 
 
         //having append here adds to our file instead of overriding it
-        Files.write(dataFile, contacts, StandardOpenOption.APPEND);
+//        Files.write(dataFile, contacts, StandardOpenOption.APPEND);
+        Files.write(dataFile, contacts);
+
     }
 
-    public static void readAllContacts() {
+    public static List<Contact> readAllContacts() {
         String directory = "data";
         String filename = "contacts.txt";
         Path dataDirectory = Paths.get(directory);
         Path dataFile = Paths.get(directory, filename);
-        List<String> contacts;
+        List<String> contacts = new ArrayList<>();
+        List<Contact> listOfContacts = new ArrayList<>();
+        String name, phoneNumber;
+
 
         try {
             contacts = Files.readAllLines(dataFile);
-            //enhanced for loop to iterate our list of strings
-            for(String contact : contacts) {
-                System.out.println(contact);
+
+//            enhanced for loop to iterate our list of strings
+            for (String person : contacts) {
+//                listOfContacts.name.add(person);
+//                System.out.println(person.substring(0,person.indexOf(",")));
+//                System.out.println(person.substring(person.indexOf(",")+1));
+                name = person.substring(0, person.indexOf(","));
+                phoneNumber = person.substring(person.indexOf(",") + 1);
+                Contact contactObject = new Contact(name, phoneNumber);
+                listOfContacts.add(contactObject);
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        return listOfContacts;
     }
 
 
-//    Example
-//
-//    Using a relative path to create a directory and file if they do not yet exist.
-//    data/info.txt
-
-//public static void writeTestFile() throws IOException {
-//    String directory = "data";
-//    String filename = "info.txt";
-//    Path dataDirectory = Paths.get(directory);
-//    Path dataFile = Paths.get(directory, filename);
-//    if (Files.notExists(dataDirectory)) {
-//        Files.createDirectories(dataDirectory);
-//    }
-//    if (! Files.exists(dataFile)) {
-//        Files.createFile(dataFile);
-//    }
-//}
 }
 
