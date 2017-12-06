@@ -10,18 +10,18 @@ public class Main {
         Input input = new Input();
         String userChoice;
 
-        try {
-//            writeTestFile();
-            writeContactsToFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            System.out.println("IO Exception, fix your stuff!");
-        } catch (Exception e) {  //if there was any other Exception being thrown it would catch it here
-            System.out.println(e.getStackTrace());
-            System.out.println(e.getMessage());
-            System.out.println("Something went wrong.!");
-        }
+//        try {
+////            writeTestFile();
+//            writeContactsToFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.println(e.getMessage());
+//            System.out.println("IO Exception, fix your stuff!");
+//        } catch (Exception e) {  //if there was any other Exception being thrown it would catch it here
+//            System.out.println(e.getStackTrace());
+//            System.out.println(e.getMessage());
+//            System.out.println("Something went wrong.!");
+//        }
 
         contacts = readAllContacts();
 //        for (Contact contact : contacts) {
@@ -40,20 +40,16 @@ public class Main {
                 showAll(contacts);
             } else if (userChoice.equals("2")) {
                 addContact(contacts);
-            }
-//           else if(userChoice.equals("3")) {
-//                showMoviesByCategory("drama");
-//          }
-             else if(userChoice.equals("4")) {
+            } else if(userChoice.equals("3")) {
+                searchContact(contacts);
+            } else if(userChoice.equals("4")) {
                 deleteContact(contacts);
             }
-//              else if (userChoice.equals("5")) {
-//                showMoviesByCategory("scifi");
-//            }
 
             System.out.println();
 
         } while(!userChoice.equals("5"));
+        updateFile(contacts);
         System.out.println("Bye");
 
 
@@ -162,6 +158,57 @@ public class Main {
                contacts.remove(i);
            }
         }
+    }
+
+    public static void searchContact(List<Contact> contacts) {
+
+        System.out.println("Enter contact's name to search");
+        Input input = new Input();
+        String nameInput = input.getString();
+
+        for(int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i).getName().equals(nameInput)){
+                System.out.println(contacts.get(i).getName());
+                System.out.println(contacts.get(i).getPhoneNumber());
+            }
+        }
+    }
+
+    public static void updateFile(List<Contact> contacts) {
+
+        String directory = "data";
+        String filename = "contacts.txt";
+        Path dataDirectory = Paths.get(directory);
+        Path dataFile = Paths.get(directory, filename);
+
+        if (Files.notExists(dataDirectory)) {
+            try {
+                Files.createDirectories(dataDirectory);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (!Files.exists(dataFile)) {
+            try {
+                Files.createFile(dataFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        ArrayList<String> contactsStrings = new ArrayList<>();
+
+        for(int i = 0; i < contacts.size(); i++) {
+           String outputString = contacts.get(i).getName() + "," + contacts.get(i).getPhoneNumber();
+            contactsStrings.add(outputString);
+        }
+           try {
+                Files.write(dataFile, contactsStrings);
+           } catch (IOException e){
+                e.printStackTrace();
+           }
+
 
 
     }
