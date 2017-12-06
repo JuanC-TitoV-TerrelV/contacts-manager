@@ -10,15 +10,12 @@ public class Main {
         List<Contact> contacts = new ArrayList<>();
         Input input = new Input();
         int userChoice;
+        String userOption;
+        boolean done;
 
         writeContactsToFile();
 
         contacts = readAllContacts();
-//        for (Contact contact : contacts) {
-//            System.out.println(contact.getName());
-//            System.out.println(contact.getPhoneNumber());
-//        }
-
 
         do {
             showMenu();
@@ -28,7 +25,9 @@ public class Main {
             if (userChoice == 1) {
                 showAll(contacts);
             } else if (userChoice == 2) {
-                addContact(contacts);
+                do {
+                    addContact(contacts);
+                } while (input.yesNo("Do you want to add another? y/n"));
             } else if (userChoice == 3) {
                 searchContact(contacts);
             } else if (userChoice == 4) {
@@ -133,8 +132,8 @@ public class Main {
 
         for (Contact contact : contacts) {
             System.out.printf("%-" + width + "s| ", contact.getName());
-            System.out.printf("(" + contact.getPhoneNumber().substring(0,3) + ")");
-            System.out.printf(contact.getPhoneNumber().substring(3,6));
+            System.out.printf("(" + contact.getPhoneNumber().substring(0, 3) + ")");
+            System.out.printf(contact.getPhoneNumber().substring(3, 6));
             System.out.printf("-" + contact.getPhoneNumber().substring(6));
             System.out.printf("       |\n");
         }
@@ -164,10 +163,10 @@ public class Main {
             }
         }
 
-            if (!found) {
-                System.out.println("Contact not found.");
-                found = false;
-            }
+        if (!found) {
+            System.out.println("Contact not found.");
+            found = false;
+        }
     }
 
 
@@ -185,10 +184,10 @@ public class Main {
                 found = true;
             }
         }
-            if (!found) {
-                System.out.println("Contact not found.");
-                found = false;
-            }
+        if (!found) {
+            System.out.println("Contact not found.");
+            found = false;
+        }
     }
 
     public static void updateFile(List<Contact> contacts) {
