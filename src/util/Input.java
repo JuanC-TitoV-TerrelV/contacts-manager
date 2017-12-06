@@ -5,6 +5,11 @@ import java.util.Scanner;
 public class Input {
     private Scanner scan;
 
+    public static boolean isNumeric(String str)
+    {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
+
     public Input() {
         this.scan = new Scanner(System.in).useDelimiter("\n");
     }
@@ -16,7 +21,7 @@ public class Input {
     public String getString(int maxLength, String prompt) {
         System.out.println(prompt);
         String userInput = this.scan.next();
-        if (userInput.length() < maxLength || userInput.length() > maxLength) {
+        if (userInput.length() < maxLength || userInput.length() > maxLength || !(isNumeric(userInput))) {
             System.out.println("Input must be " + maxLength + " digits long without any special characters or spaces");
             return getString(maxLength, prompt);
         } else {
