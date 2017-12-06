@@ -1,4 +1,4 @@
-import util.Input;
+import util.*;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -86,16 +86,16 @@ public class Main {
         String filename = "contacts.txt";
         Path dataDirectory = Paths.get(directory);
         Path dataFile = Paths.get(directory, filename);
-        List<String> contacts = new ArrayList<>();
+        List<String> contactsStrings = new ArrayList<>();
         List<Contact> listOfContacts = new ArrayList<>();
         String name, phoneNumber;
 
 
         try {
-            contacts = Files.readAllLines(dataFile);
+            contactsStrings = Files.readAllLines(dataFile);
 
 //            enhanced for loop to iterate our list of strings
-            for (String person : contacts) {
+            for (String person : contactsStrings) {
 //                listOfContacts.name.add(person);
 //                System.out.println(person.substring(0,person.indexOf(",")));
 //                System.out.println(person.substring(person.indexOf(",")+1));
