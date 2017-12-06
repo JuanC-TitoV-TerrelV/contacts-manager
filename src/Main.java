@@ -156,10 +156,10 @@ public class Main {
         Input input = new Input();
         String nameInput = input.getString();
 
-        for(Contact e : contacts) {
-           if (e.getName().equals(nameInput)){
+        for(int i = 0; i < contacts.size(); i++) {
+           if (contacts.get(i).getName().equals(nameInput)){
                System.out.println("Contact Removed");
-               contacts.remove(e);
+               contacts.remove(i);
            }
         }
 
