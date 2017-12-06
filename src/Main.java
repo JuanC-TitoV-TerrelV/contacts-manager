@@ -36,16 +36,18 @@ public class Main {
             System.out.println("Enter your choice: ");
             userChoice = input.getString();
 
-            if(userChoice.equals("1")) {
+            if (userChoice.equals("1")) {
                 showAll(contacts);
-            } else if(userChoice.equals("2")) {
+            } else if (userChoice.equals("2")) {
                 addContact(contacts);
-           }
+            }
 //           else if(userChoice.equals("3")) {
 //                showMoviesByCategory("drama");
-//            } else if(userChoice.equals("4")) {
-//                showMoviesByCategory("horror");
-//            } else if (userChoice.equals("5")) {
+//          }
+             else if(userChoice.equals("4")) {
+                deleteContact(contacts);
+            }
+//              else if (userChoice.equals("5")) {
 //                showMoviesByCategory("scifi");
 //            }
 
@@ -147,6 +149,21 @@ public class Main {
 
         Contact contactToAdd = new Contact(nameInput, phoneNumberInput);
         contacts.add(contactToAdd);
+    }
+
+    public static void deleteContact(List<Contact> contacts){
+        System.out.println("Enter contact's name to delete");
+        Input input = new Input();
+        String nameInput = input.getString();
+
+        for(Contact e : contacts) {
+           if (e.getName().equals(nameInput)){
+               System.out.println("Contact Removed");
+               contacts.remove(e);
+           }
+        }
+
+
     }
 
 }
