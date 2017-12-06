@@ -10,8 +10,6 @@ public class Main {
         List<Contact> contacts = new ArrayList<>();
         Input input = new Input();
         int userChoice;
-        String userOption;
-        boolean done;
 
         writeContactsToFile();
 
@@ -165,7 +163,6 @@ public class Main {
 
         if (!found) {
             System.out.println("Contact not found.");
-            found = false;
         }
     }
 
@@ -186,7 +183,6 @@ public class Main {
         }
         if (!found) {
             System.out.println("Contact not found.");
-            found = false;
         }
     }
 
