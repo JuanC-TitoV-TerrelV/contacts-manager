@@ -6,16 +6,27 @@ public class Input {
     private Scanner scan;
 
     public Input() {
-        this.scan = new Scanner(System.in);
+        this.scan = new Scanner(System.in).useDelimiter("\n");
     }
 
     public String getString() {
-        return this.scan.nextLine();
+        return this.scan.next();
+    }
+
+    public String getString(int maxLength, String prompt) {
+        System.out.println(prompt);
+        String userInput = this.scan.next();
+        if (userInput.length() < maxLength || userInput.length() > maxLength) {
+            System.out.println("Input must be " + maxLength + " digits long without any special characters or spaces");
+            return getString(maxLength, prompt);
+        } else {
+        return userInput;
+        }
     }
 
     public String getString(String prompt) {
         System.out.println(prompt);
-        return this.scan.nextLine();
+        return this.scan.next();
     }
 
 
@@ -62,13 +73,22 @@ public class Input {
         }
     }
 
+
+
     public int getInt() {
-        return this.scan.nextInt();
+        String userInput = this.scan.next();
+        try {
+            return Integer.valueOf(userInput);
+        } catch (NumberFormatException e) {
+            System.out.println("Your input must be a number");
+            System.out.println(e.getMessage());
+            return getInt();
+        }
     }
 
     public int getInt(String prompt) {
         System.out.println(prompt);
-        return this.scan.nextInt();
+        return getInt();
     }
 
     public double getDouble(double min, double max) {
@@ -96,11 +116,18 @@ public class Input {
     }
 
     public double getDouble() {
-        return this.scan.nextDouble();
+        String userInput = scan.next();
+
+        try {
+            return Double.valueOf(userInput);
+        } catch(NumberFormatException e) {
+            System.out.println("Your input must be a double");
+            return getDouble();
+        }
     }
 
     public double getDouble(String prompt) {
         System.out.println(prompt);
-        return this.scan.nextDouble();
+        return getDouble();
     }
 }
