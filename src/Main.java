@@ -38,11 +38,10 @@ public class Main {
 
             if(userChoice.equals("1")) {
                 showAll(contacts);
-            }
-
-//            else if(userChoice.equals("2")) {
-//                showMoviesByCategory("animated");
-//            } else if(userChoice.equals("3")) {
+            } else if(userChoice.equals("2")) {
+                addContact(contacts);
+           }
+//           else if(userChoice.equals("3")) {
 //                showMoviesByCategory("drama");
 //            } else if(userChoice.equals("4")) {
 //                showMoviesByCategory("horror");
@@ -122,13 +121,33 @@ public class Main {
         System.out.println("(1, 2,3 4, or 5):");
     }
 
-    public static void showAll(List<Contact> contacts){
+    public static void showAll(List<Contact> contacts) {
+//        for (Contact contact : contacts) {
+//            System.out.println(contact.getName());
+//            System.out.println(contact.getPhoneNumber());
+//        }
+        int width = 20;
+
+        System.out.printf("%-" + width + "s| ", "Name");
+        System.out.printf("%-" + width + "s|%n ", "Phone number");
+        System.out.println("------------------------------------------");
+
         for (Contact contact : contacts) {
-            System.out.println(contact.getName());
-            System.out.println(contact.getPhoneNumber());
+            System.out.printf("%-" + width + "s| ", contact.getName());
+            System.out.printf("%-" + width + "s| %n", contact.getPhoneNumber());
         }
     }
 
+    public static void addContact(List<Contact> contacts){
+        System.out.println("Enter contact's name.");
+        Input input = new Input();
+        String nameInput = input.getString();
+        System.out.println("Enter contact's phone number.");
+        String phoneNumberInput = input.getString();
+
+        Contact contactToAdd = new Contact(nameInput, phoneNumberInput);
+        contacts.add(contactToAdd);
+    }
 
 }
 
