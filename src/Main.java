@@ -1,9 +1,12 @@
-import util.*;
+import util.Input;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Main {
     public static void main(String[] args) {
@@ -33,13 +36,12 @@ public class Main {
             }
 
             System.out.println();
-
         } while (!(userChoice == 5));
         updateFile(contacts);
         System.out.println("Bye");
-
-
     }
+
+
 
     public static void writeContactsToFile() {
         String directory = "data";
@@ -74,18 +76,24 @@ public class Main {
             contactsStrings.add("Another name,9154715340");
             contactsStrings.add("Some Else,2543689782");
             contactsStrings.add("Mickey Mouse,2019135865");
-            //having append here adds to our file instead of overriding it
-//        Files.write(dataFile, contactsStrings, StandardOpenOption.APPEND);
             try {
                 Files.write(dataFile, contactsStrings);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-
-
     }
+
+    public static String capitalize(String text){
+        String c = (text != null)? text.trim() : "";
+        String[] words = c.split(" ");
+        String result = "";
+        for(String w : words){
+            result += (w.length() > 1? w.substring(0, 1).toUpperCase(Locale.US) + w.substring(1, w.length()).toLowerCase(Locale.US) : w) + " ";
+        }
+        return result.trim();
+    }
+
 
     public static List<Contact> readAllContacts() {
         String directory = "data";
@@ -98,7 +106,6 @@ public class Main {
         try {
             contactsStrings = Files.readAllLines(dataFile);
 
-//            enhanced for loop to iterate our list of strings
             for (String person : contactsStrings) {
                 name = person.substring(0, person.indexOf(","));
                 phoneNumber = person.substring(person.indexOf(",") + 1);
@@ -138,13 +145,47 @@ public class Main {
     }
 
     public static void addContact(List<Contact> contacts) {
-        System.out.println("Enter contact's name.");
+        boolean alreadyExists;
         Input input = new Input();
-        String nameInput = input.getString();
+        String nameInput = input.getAlphaOnly("Enter contact's name.");
+        nameInput = capitalize(nameInput);
         String phoneNumberInput = input.getString(10, "Enter contact's phone number.");
         Contact contactToAdd = new Contact(nameInput, phoneNumberInput);
-        contacts.add(contactToAdd);
-        System.out.println("Contact added.");
+
+        alreadyExists = checkForExisting(contacts, nameInput);
+
+        if (alreadyExists) {
+            Boolean yesResponse = input.yesNo("Contact already exists. Do you wish to continue?");
+            if(yesResponse) {
+                contacts.add(contactToAdd);
+                System.out.println("Contact added.");
+                displayContact(contactToAdd);
+            } else {
+                System.out.println("Contact not added.");
+                displayContact(contactToAdd);
+            }
+        } else {
+            contacts.add(contactToAdd);
+            System.out.println("Contact added.");
+            displayContact(contactToAdd);
+        }
+    }
+
+    public static Boolean checkForExisting(List<Contact> contacts, String nameInput) {
+
+        boolean found = false;
+
+        for(Contact contact: contacts) {
+            if(contact.getName().equalsIgnoreCase(nameInput) ) {
+                found = true;
+            }
+        }
+        return found;
+
+    }
+
+    public static void displayContact(Contact contact) {
+        System.out.println(contact.getName() + " " + contact.getPhoneNumber());
     }
 
     public static void deleteContact(List<Contact> contacts) {
@@ -156,6 +197,7 @@ public class Main {
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i).getName().equalsIgnoreCase(nameInput)) {
                 System.out.println("Contact Removed");
+                displayContact(contacts.get(i));
                 contacts.remove(i);
                 found = true;
             }

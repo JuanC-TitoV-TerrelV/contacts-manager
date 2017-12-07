@@ -18,6 +18,23 @@ public class Input {
         return this.scan.next();
     }
 
+    public boolean isAlpha(String name) {
+        return name.matches("^[\\p{L} .'-]+$");
+    }
+
+    public String getAlphaOnly(String prompt){
+
+        System.out.println(prompt);
+        String userInput = this.scan.next();
+        if (isAlpha(userInput)) {
+            return userInput;
+        } else {
+            System.out.println("Input should only be letters");
+            return getAlphaOnly(prompt);
+        }
+
+    }
+
     public String getString(int maxLength, String prompt) {
         System.out.println(prompt);
         String userInput = this.scan.next();
