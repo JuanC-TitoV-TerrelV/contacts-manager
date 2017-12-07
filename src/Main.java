@@ -158,15 +158,16 @@ public class Main {
             if (yesResponse) {
                 contacts.add(contactToAdd);
                 System.out.println("Contact added.");
-                displayContact(contactToAdd);
+                contactToAdd.displayContact();
             } else {
                 System.out.println("Contact not added.");
-                displayContact(contactToAdd);
+                contactToAdd.displayContact();
             }
         } else {
             contacts.add(contactToAdd);
             System.out.println("Contact added.");
-            displayContact(contactToAdd);
+            contactToAdd.displayContact();
+
         }
     }
 
@@ -183,9 +184,6 @@ public class Main {
 
     }
 
-    public static void displayContact(Contact contact) {
-        System.out.println(contact.getName() + " " + contact.getPhoneNumber());
-    }
 
     public static void deleteContact(List<Contact> contacts) {
         System.out.println("Enter contact's name to delete");
@@ -196,7 +194,7 @@ public class Main {
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i).getName().equalsIgnoreCase(nameInput)) {
                 System.out.println("Contact Removed");
-                displayContact(contacts.get(i));
+                contacts.get(i).displayContact();
                 contacts.remove(i);
                 found = true;
             }
