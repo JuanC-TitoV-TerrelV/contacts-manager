@@ -42,7 +42,6 @@ public class Main {
     }
 
 
-
     public static void writeContactsToFile() {
         String directory = "data";
         String filename = "contacts.txt";
@@ -84,12 +83,12 @@ public class Main {
         }
     }
 
-    public static String capitalize(String text){
-        String c = (text != null)? text.trim() : "";
+    public static String capitalize(String text) {
+        String c = (text != null) ? text.trim() : "";
         String[] words = c.split(" ");
         String result = "";
-        for(String w : words){
-            result += (w.length() > 1? w.substring(0, 1).toUpperCase(Locale.US) + w.substring(1, w.length()).toLowerCase(Locale.US) : w) + " ";
+        for (String w : words) {
+            result += (w.length() > 1 ? w.substring(0, 1).toUpperCase(Locale.US) + w.substring(1, w.length()).toLowerCase(Locale.US) : w) + " ";
         }
         return result.trim();
     }
@@ -156,7 +155,7 @@ public class Main {
 
         if (alreadyExists) {
             Boolean yesResponse = input.yesNo("Contact already exists. Do you wish to continue?");
-            if(yesResponse) {
+            if (yesResponse) {
                 contacts.add(contactToAdd);
                 System.out.println("Contact added.");
                 displayContact(contactToAdd);
@@ -175,8 +174,8 @@ public class Main {
 
         boolean found = false;
 
-        for(Contact contact: contacts) {
-            if(contact.getName().equalsIgnoreCase(nameInput) ) {
+        for (Contact contact : contacts) {
+            if (contact.getName().equalsIgnoreCase(nameInput)) {
                 found = true;
             }
         }

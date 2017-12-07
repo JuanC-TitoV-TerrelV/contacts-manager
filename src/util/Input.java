@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class Input {
     private Scanner scan;
 
-    public static boolean isNumeric(String str)
-    {
+    public static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
 
@@ -22,7 +21,7 @@ public class Input {
         return name.matches("^[\\p{L} .'-]+$");
     }
 
-    public String getAlphaOnly(String prompt){
+    public String getAlphaOnly(String prompt) {
 
         System.out.println(prompt);
         String userInput = this.scan.next();
@@ -42,7 +41,7 @@ public class Input {
             System.out.println("Input must be " + maxLength + " digits long without any special characters or spaces");
             return getString(maxLength, prompt);
         } else {
-        return userInput;
+            return userInput;
         }
     }
 
@@ -54,7 +53,7 @@ public class Input {
 
     public boolean yesNo() {
         String input = this.scan.next();
-        if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
+        if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
             return true;
         } else {
             return false;
@@ -64,7 +63,7 @@ public class Input {
     public boolean yesNo(String prompt) {
         System.out.println(prompt);
         String input = this.scan.next();
-        if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
+        if (input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")) {
             return true;
         } else {
             return false;
@@ -76,7 +75,7 @@ public class Input {
 
         int userInput = this.getInt();
 
-        if(userInput > max || userInput < min) {
+        if (userInput > max || userInput < min) {
             return getInt(min, max);
         } else {
             return userInput;
@@ -88,13 +87,12 @@ public class Input {
 
         int userInput = this.getInt();
 
-        if(userInput > max || userInput < min) {
+        if (userInput > max || userInput < min) {
             return getInt(min, max);
         } else {
             return userInput;
         }
     }
-
 
 
     public int getInt() {
@@ -118,7 +116,7 @@ public class Input {
 
         double userInput = this.getDouble();
 
-        if(userInput > max || userInput < min) {
+        if (userInput > max || userInput < min) {
             return getDouble(min, max);
         } else {
             return userInput;
@@ -130,7 +128,7 @@ public class Input {
 
         double userInput = this.getDouble();
 
-        if(userInput > max || userInput < min) {
+        if (userInput > max || userInput < min) {
             return getDouble(min, max);
         } else {
             return userInput;
@@ -142,7 +140,7 @@ public class Input {
 
         try {
             return Double.valueOf(userInput);
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             System.out.println("Your input must be a double");
             return getDouble();
         }
